@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kommun AI Chat - Inställningar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 28px;
+      color: #212529;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .subtitle {
+      font-size: 15px;
+      color: #6c757d;
+      margin-bottom: 40px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 16px;
+    }
+    
+    .form-group {
+      margin-bottom: 24px;
+    }
+    
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #212529;
+      margin-bottom: 6px;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #0066cc;
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 13px;
+    }
+    
+    .help-text {
+      font-size: 13px;
+      color: #6c757d;
+      margin-top: 4px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .btn-primary {
+      background: #0066cc;
+      color: white;
+      flex: 1;
+    }
+    
+    .btn-primary:hover {
+      background: #0052a3;
+    }
+    
+    .btn-secondary {
+      background: #e9ecef;
+      color: #495057;
+    }
+    
+    .btn-secondary:hover {
+      background: #dee2e6;
+    }
+    
+    .status {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e9ecef;
+    }
+    
+    .section-divider {
+      margin: 32px 0;
+      border: none;
+      border-top: 1px solid #e9ecef;
+    }
+    
+    .ai-config-item {
+      padding: 16px;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      background: #f8f9fa;
+    }
+    
+    .ai-config-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .ai-config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .ai-config-name {
+      font-weight: 600;
+      font-size: 15px;
+      color: #212529;
+    }
+    
+    .ai-config-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .ai-config-info {
+      font-size: 13px;
+      color: #6c757d;
+      margin-top: 4px;
+    }
+    
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: #6c757d;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    
+    .modal-close:hover {
+      background: #e9ecef;
+    }
+    
+    .modal-body {
+      padding: 20px;
+    }
+    
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #e9ecef;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    
+    .ai-test-result {
+      padding: 12px 20px;
+      margin: 0 20px 16px 20px;
+      border-radius: 6px;
+      font-size: 13px;
+      border: 1px solid;
+    }
+    
+    .ai-test-result.success {
+      background: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
+    }
+    
+    .ai-test-result.error {
+      background: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
+    
+    .ai-test-result.testing {
+      background: #d1ecf1;
+      color: #0c5460;
+      border-color: #bee5eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Inställningar</h1>
+    <p class="subtitle">Konfigurera Kommun AI Chat</p>
+    
+    <!-- Allmänna inställningar -->
+    <div class="card">
+      <h2 class="section-title">Allmänna inställningar</h2>
+      
+      <div class="form-group">
+        <label for="extension-name">Namn</label>
+        <input type="text" id="extension-name" placeholder="Kommun AI Chat">
+        <p class="help-text">Namnet som visas i header</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="chat-session-limit">Max antal sparade chattar</label>
+        <input type="number" id="chat-session-limit" placeholder="50" min="1" max="500">
+        <p class="help-text">Max antal chattsessioner som sparas (standard: 50)</p>
+      </div>
+      
+      <div class="form-group">
+        <label>Chatthistorik</label>
+        <button class="btn-secondary" id="clear-chat-btn" style="width: 100%; margin-top: 8px;">Rensa chatthistorik</button>
+        <p class="help-text">Rensa all sparad chatthistorik från alla sidor</p>
+      </div>
+    </div>
+    
+    <!-- AI-inställningar -->
+    <div class="card">
+      <h2 class="section-title">AI-inställningar</h2>
+      
+      <div id="ai-configs-list"></div>
+      
+      <div class="form-group" style="margin-top: 24px;">
+        <button class="btn-secondary" id="add-ai-btn" style="width: 100%;">Lägg till AI</button>
+      </div>
+    </div>
+    
+    <!-- AI-formulär (modal) -->
+    <div id="ai-form-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="ai-form-title">Lägg till AI</h3>
+          <button class="modal-close" id="ai-form-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="ai-name">Namn</label>
+            <input type="text" id="ai-name" placeholder="t.ex. Redaktör, Support">
+            <p class="help-text">Namn för denna AI-inställning</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="ai-api-url">API Server URL</label>
+            <input type="text" id="ai-api-url" placeholder="https://api.example.com">
+            <p class="help-text">URL till din OpenAI-kompatibla API-server</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="ai-api-key">API-nyckel</label>
+            <input type="password" id="ai-api-key" placeholder="sk-...">
+            <p class="help-text">Din API-nyckel från din AI-server</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="ai-model-name">Modellnamn</label>
+            <input type="text" id="ai-model-name" placeholder="gpt-4">
+            <p class="help-text">Namnet på modellen i din AI-server</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="ai-api-endpoint">API Endpoint</label>
+            <input type="text" id="ai-api-endpoint" placeholder="/api/v1">
+            <p class="help-text">API-endpoint-struktur (t.ex. /api/v1 eller /v1)</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="ai-api-timeout">Timeout (sekunder)</label>
+            <input type="number" id="ai-api-timeout" placeholder="30" min="5" max="300">
+            <p class="help-text">Timeout för API-förfrågningar (standard: 30 sekunder)</p>
+          </div>
+        </div>
+        <div id="ai-test-result" class="ai-test-result" style="display: none;"></div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="ai-form-test">Testa anslutning</button>
+          <button class="btn-secondary" id="ai-form-cancel">Avbryt</button>
+          <button class="btn-primary" id="ai-form-save">Spara</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Domäner -->
+    <div class="card">
+      <h2 class="section-title">Tillåtna domäner</h2>
+      
+      <div class="form-group">
+        <label for="allowed-domains">Tillåtna domäner (en per rad)</label>
+        <textarea id="allowed-domains" placeholder="www.kommun.se&#10;minasidor.kommun.se"></textarea>
+        <p class="help-text">Chatten fungerar bara på dessa domäner</p>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button class="btn-secondary" id="reset-btn">Återställ</button>
+      <button class="btn-primary" id="save-btn">Spara inställningar</button>
+    </div>
+    
+    <div class="status" id="status"></div>
+  </div>
+  
+  <script src="settings.js"></script>
+</body>
+</html>
